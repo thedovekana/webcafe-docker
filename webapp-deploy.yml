@@ -26,4 +26,4 @@
         image: "{{ docker_image_name }}:{{ docker_image_tag }}"
         state: started
         restart_policy: always
-        published_ports: "{{ docker_container_port }}:8080"
+        published_ports: "{{ docker_container_port }}:80"
