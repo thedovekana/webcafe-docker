@@ -1,0 +1,29 @@
+---
+- name: Deploy Docker container
+  hosts: node2
+  become: yes
+  vars:
+    docker_container_name: webcafe
+    docker_image_name: thedove/webcafe
+    docker_image_tag: v2
+    docker_container_port: 80
+
+  tasks:
+
+    - name: "adding vagrant & jenkins to docker group"
+      user:
+        user: "vagrant"
+        groups: docker
+        append: true
+
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
+
+    - name: Start Docker container
+      docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        state: started
+        restart_policy: always
+        published_ports: "{{ docker_container_port }}:8080"
