@@ -19,6 +19,9 @@
     - name: Pull Docker image
       docker_image:
         name: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        
+    - name: remove  all the containers in running with name webcafe
+      command: docker rm -f $(docker ps -aqf ""{{ docker_container_name }}"")
 
     - name: Start Docker container
       docker_container:
